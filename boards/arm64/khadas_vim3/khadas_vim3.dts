@@ -1,0 +1,38 @@
+/*
+ * Copyright 2023 Synaptics
+ * 
+ * Author: Shiv
+ */
+
+ /dts-v1/;
+
+ #include <amlogic/a311d.dtsi>
+ 
+ / {
+     model = "Khadas VIM3";
+     compatible = "khadas,vim3";
+ 
+     chosen {
+         zephyr,sram = &sram0;
+         zephyr,console = &uart2;
+         zephyr,shell-uart = &uart2;
+     };
+ 
+     cpus {
+         /delete-node/ cpu@1;
+         /delete-node/ cpu@2;
+         /delete-node/ cpu@3;
+         /delete-node/ cpu@4;
+         /delete-node/ cpu@5;
+     };
+ };
+ 
+ &uart2 {
+     status = "okay";
+ };
+ 
+ &clkc_AO{
+    status = "okay";
+ };
+
+ 

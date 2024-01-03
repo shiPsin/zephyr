@@ -1,0 +1,12 @@
+#
+# Copyright 2022 Huawei France Technologies SASU
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+config SOC_SERIES_A311D
+	bool "Rockchip A311D Series"
+	select ARM64
+	select SOC_FAMILY_AMLOGIC
+	help
+	  Enable support for Amlogic A311D Series.

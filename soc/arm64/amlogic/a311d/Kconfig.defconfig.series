@@ -1,0 +1,14 @@
+#
+# Copyright 2022 Huawei France Technologies SASU
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+if SOC_SERIES_A311D
+
+config SOC_SERIES
+	default "a311d"
+
+source "soc/arm64/amlogic/a311d/Kconfig.defconfig.a311d"
+
+endif # SOC_SERIES_A311D
