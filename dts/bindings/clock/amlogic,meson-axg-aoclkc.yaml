@@ -1,0 +1,22 @@
+
+description: Amlogic DDR Clock Controller Device Tree Bindings
+
+compatible: "amlogic,meson-axg-aoclkc"
+include: base.yaml
+properties:
+
+  clocks:
+    required: true
+
+  clock-names:
+    required: true
+
+  "#clock-cells":
+    required: true
+    type: int
+
+
+  "#reset-cells":
+    required: true
+    type: int
+

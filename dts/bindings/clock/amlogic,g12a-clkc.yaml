@@ -1,0 +1,15 @@
+
+description: Amlogic DDR Clock Controller Device Tree Bindings
+
+compatible: "amlogic,g12a-clkc"
+include: base.yaml
+properties:
+
+  clocks:
+    required: true
+
+  clock-names:
+    required: true
+
+  "#clock-cells":
+    type: int

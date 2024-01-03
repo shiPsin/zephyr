@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: This is a representation of ARM Cortex-A73 CPU.
+
+compatible: "arm,cortex-a73"
+
+include: cpu.yaml

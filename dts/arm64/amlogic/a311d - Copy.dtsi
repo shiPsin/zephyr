@@ -1,0 +1,118 @@
+/*
+ * Copyright 2023 Synaptics
+ * 
+ * Author: Shiv
+ */
+
+#include <arm64/armv8-a.dtsi>
+#include <zephyr/dt-bindings/interrupt-controller/arm-gic.h>
+#include <zephyr/dt-bindings/interrupt-controller/irq.h>
+#include <zephyr/dt-bindings/clock/g12a-clkc.h>
+#include <zephyr/dt-bindings/clock/g12a-aoclkc.h>
+#include <mem.h>
+
+
+/ {
+	interrupt-parent = <&gic>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	cpus {
+		#address-cells = <2>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0 0x0>;
+			enable-method = "psci";
+		};
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0 0x1>;
+			enable-method = "psci";
+		};
+		cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a73";
+			reg = <0x0 0x100>;
+			enable-method = "psci";
+		};
+		cpu@3 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a73";
+			reg = <0x0 0x101>;
+			enable-method = "psci";
+		};
+		cpu@4 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a73";
+			reg = <0x0 0x102>;
+			enable-method = "psci";
+		};
+		cpu@5 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a73";
+			reg = <0x0 0x103>;
+			enable-method = "psci";
+		};
+        
+	};
+
+	psci: psci {
+		compatible = "arm,psci-1.0";
+		method = "smc";
+	};
+
+	sram0: memory@10000000 {
+		reg = <0x10000000 DT_SIZE_M(128)>;
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupt-parent = <&gic>;
+		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>,
+			         <GIC_PPI 14 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>,
+			         <GIC_PPI 11 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>,
+			         <GIC_PPI 10 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+                    };
+
+//---------------------working------------------------------//
+	uart2: serial@ff803000 {
+		compatible = "amlogic,a311d-uart", "ns16550";
+		reg = <0xff803000 0x1000>;
+		interrupt-parent = <&gic>;
+		interrupts = <GIC_SPI 193 IRQ_TYPE_EDGE_RISING IRQ_DEFAULT_PRIORITY>;
+		status = "disabled";
+		reg-shift = <2>;
+		clock-frequency = <24000000>;
+	};
+
+	clkc_AO: clock-controller {
+		compatible = "amlogic,meson-axg-aoclkc";
+		#clock-cells = <1>;
+		#reset-cells = <1>;
+		clocks = <&xtal>;
+		clock-names = "xtal";
+	};
+
+	gic: interrupt-controller@ffc01000 {
+		compatible = "arm,gic-v3", "arm,gic";
+		reg = <0x0 0xffc01000 0 0x1000>,
+				<0x0 0xffc02000 0 0x2000>,
+				<0x0 0xffc04000 0 0x2000>,
+				<0x0 0xffc06000 0 0x2000>;
+		interrupt-controller;
+		#interrupt-cells = <4>;
+		#address-cells = <0>;
+		#clock-cells = <0>;
+	};
+
+	xtal: xtal-clk {
+		compatible = "fixed-clock";
+		clock-frequency = <24000000>;
+		//clock-output-names = "xtal";
+		#clock-cells = <0>;
+	};
+};
